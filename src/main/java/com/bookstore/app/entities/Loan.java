@@ -3,14 +3,20 @@ package com.bookstore.app.entities;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Loan {
 	
 	@Id
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid2")
 	private String id;
 	
 	@Temporal(TemporalType.TIMESTAMP)
@@ -20,8 +26,12 @@ public class Loan {
 	private Date returnDate;
 	
 	private Boolean register;	
-//	private Book book;
-//	private Client client;
+	
+	@OneToOne
+	private Book book;
+	
+	@OneToOne
+	private Client client;
 
 	public String getId() {
 		return id;
@@ -53,6 +63,22 @@ public class Loan {
 
 	public void setRegister(Boolean register) {
 		this.register = register;
+	}
+
+	public Book getBook() {
+		return book;
+	}
+
+	public void setBook(Book book) {
+		this.book = book;
+	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
 	}
 	
 	

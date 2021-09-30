@@ -1,12 +1,18 @@
 package com.bookstore.app.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Book {
 
 	@Id
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid2")
 	private String id;
 	private Long isbn;
 	private String title;
@@ -15,8 +21,12 @@ public class Book {
 	private Integer borrowedCopies;
 	private Integer remainingCopies;
 	private Boolean register;
-//	private Author author;
-//	private Editorial editorial;
+	
+	@OneToOne
+	private Author author;
+	
+	@OneToOne
+	private Editorial editorial;
 	
 	public String getId() {
 		return id;
@@ -65,6 +75,18 @@ public class Book {
 	}
 	public void setRegister(Boolean register) {
 		this.register = register;
+	}
+	public Author getAuthor() {
+		return author;
+	}
+	public void setAuthor(Author author) {
+		this.author = author;
+	}
+	public Editorial getEditorial() {
+		return editorial;
+	}
+	public void setEditorial(Editorial editorial) {
+		this.editorial = editorial;
 	}
 	
 	
