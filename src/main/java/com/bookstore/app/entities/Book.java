@@ -16,7 +16,7 @@ public class Book {
 	private String id;
 	private Long isbn;
 	private String title;
-	private Integer age;
+	private Integer year;
 	private Integer copies;
 	private Integer borrowedCopies;
 	private Integer remainingCopies;
@@ -46,11 +46,11 @@ public class Book {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public Integer getAge() {
-		return age;
+	public Integer getYear() {
+		return year;
 	}
-	public void setAge(Integer age) {
-		this.age = age;
+	public void setYear(Integer age) {
+		this.year = age;
 	}
 	public Integer getCopies() {
 		return copies;
