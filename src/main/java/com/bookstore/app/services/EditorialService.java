@@ -2,7 +2,10 @@ package com.bookstore.app.services;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bookstore.app.entities.Editorial;
 import com.bookstore.app.errors.ServiceError;
@@ -11,8 +14,10 @@ import com.bookstore.app.repositories.EditorialRepository;
 @Service
 public class EditorialService {
 
+	@Autowired
 	private EditorialRepository editorialRepository;
 
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
 	public void register(String name) throws ServiceError {
 		validate(name);
 		Editorial editorial = new Editorial();
@@ -22,6 +27,7 @@ public class EditorialService {
 		editorialRepository.save(editorial);
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
 	public void change(String id, String name) throws ServiceError {
 		validate(name);
 
@@ -36,6 +42,7 @@ public class EditorialService {
 		}
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
 	public void discharge(String id, String name) throws ServiceError {
 		validate(name);
 

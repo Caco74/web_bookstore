@@ -2,6 +2,7 @@ package com.bookstore.app.services;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bookstore.app.entities.Book;
@@ -11,6 +12,7 @@ import com.bookstore.app.repositories.BookRepository;
 @Service
 public class BookService {
 	
+	@Autowired
 	private BookRepository bookRepository;
 	
 	public void register(Long isbn, String title, Integer year, Integer copies) throws ServiceError {
@@ -44,7 +46,9 @@ public class BookService {
 		Optional <Book> response = bookRepository.findById(id);
 		if (response.isPresent()) {
 			Book book = response.get();
-			book.setRegister(Boolean.FALSE);			bookRepository.save(book);
+			book.setRegister(Boolean.FALSE);
+			
+			bookRepository.save(book);
 		} else {
 			throw new ServiceError("The requested book was not found.");
 		}
