@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bookstore.app.entities.Author;
@@ -22,17 +23,21 @@ public class AuthorService implements UserDetailsService{
 	@Autowired
 	private AuthorRepository authorRepository;
 	
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
 	public void register(String name) throws ServiceError{
 		validate(name);
 		Author author = new Author();
 		author.setName(name);
 		author.setRegister(Boolean.TRUE);
 		
-		authorRepository.save(author);
+		authorRepository.save(author);		
 	}
 	
+	 
+	
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
 	public void change(String id, String name) throws ServiceError {
-		validate(name);
+		//validate(name);
 		
 		Optional <Author> response = authorRepository.findById(id); 
 		if (response.isPresent()) {
@@ -45,8 +50,9 @@ public class AuthorService implements UserDetailsService{
 		}		
 	}
 	
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
 	public void discharge(String id, String name) throws ServiceError {
-		validate(name);
+		//validate(name);
 		
 		Optional <Author> response = authorRepository.findById(id);
 		if (response.isPresent()) {

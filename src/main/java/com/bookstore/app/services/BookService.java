@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bookstore.app.entities.Book;
 import com.bookstore.app.errors.ServiceError;
@@ -15,6 +17,7 @@ public class BookService {
 	@Autowired
 	private BookRepository bookRepository;
 	
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
 	public void register(Long isbn, String title, Integer year, Integer copies) throws ServiceError {
 		
 		validate(title, copies);
@@ -28,6 +31,7 @@ public class BookService {
 		bookRepository.save(book);
 	}
 	
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
 	public void change(String id, String title, Integer copies) throws ServiceError {
 		validate(title, copies);
 		
@@ -42,6 +46,7 @@ public class BookService {
 		}
 	}
 	
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
 	public void discharge(String id, String title) throws ServiceError {
 		Optional <Book> response = bookRepository.findById(id);
 		if (response.isPresent()) {
