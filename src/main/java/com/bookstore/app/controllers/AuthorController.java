@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,15 +47,24 @@ public class AuthorController {
 		return "redirect:/authors/list";
 	}
 	
+	@GetMapping("/edit/{id}")
+	public String edit(@PathVariable("id") String idAuhtor, ModelMap model) throws ServiceError {
+		Author author = authorService.listAuthor(idAuhtor);
+		
+		model.addAttribute("author", author);
+		return "edit_authors";
+	}
 	
+	@PostMapping("/edit/{id}")
+	public String edit(ModelMap model, @PathVariable String id, @RequestParam String name) throws ServiceError {
+		try {
+			authorService.change(id, name);
+		} catch (ServiceError e) {
+			return "redirect:/authors/edit/"+id;
+		}
+		return "redirect:/authors/list";
+	}
 	
-//	@GetMapping("/list_assets")
-//	public String listAuthorsd(ModelMap model) {
-//		List<Author> authors = authorService.listAll();
-//		/*List<Author> authors = authorService.listAssets();*/
-//		model.addAttribute("authors", authors);
-//		return "authors";
-//	}
 	
 
 }

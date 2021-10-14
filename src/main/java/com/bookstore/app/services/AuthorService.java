@@ -37,7 +37,7 @@ public class AuthorService implements UserDetailsService{
 	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
 	public void change(String id, String name) throws ServiceError {
-		//validate(name);
+		validate(name);
 		
 		Optional <Author> response = authorRepository.findById(id); 
 		if (response.isPresent()) {

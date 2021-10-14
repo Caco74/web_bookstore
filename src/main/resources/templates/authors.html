@@ -31,7 +31,7 @@
 					<tr class="table-active">
 						<td scope="row"><strong th:text="${author.id}"></strong></td>
 						<td scope="row"><strong th:text="${author.name}"></strong></td>
-						<td scope="row"><a class="btn btn-dark" th:href="@{/author_edit}" role="button"><i class="fas fa-edit"></i></a></td>
+						<td scope="row"><a class="btn btn-dark" th:href="@{/authors/edit/__${author.id}__}" role="button"><i class="fas fa-edit"></i></a></td>
 						<td scope="row">
 							<a class="btn btn-dark" th:href="@{/author_state}" role="button"	>
 								<abbr title="Deactivate this author"><i th:if="${author.register}" class="fas fa-eye-slash"></i></abbr>
