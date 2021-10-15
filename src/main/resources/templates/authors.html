@@ -11,38 +11,57 @@
     <title>Authors</title>
 </head>
 <body>
-	<h1 class="text-center">Authors List</h1>
+	<h1 class="text-center display-3">Authors List</h1>
 	<div class="container">
-		<a class="btn btn-success" th:href="@{/authors/register}" role="button">Register</a>
+		<div class="row">
+			<div class="col">
+				<a class="btn btn-success" th:href="@{/authors/register}" role="button">Register</a>
+
+			</div>
+			<div class="col d-flex justify-content-end">
+				<a class="btn btn-dark me-3" th:href="@{/}" role="button">Home</a>
+				<a class="btn btn-dark me-3" th:href="@{/books}" role="button">Books</a>
+				<a class="btn btn-dark me-3" th:href="@{/editorials}" role="button">Editorials</a>
+
+			</div>
+			
+			
+			<!-- <div class="d-flex flex-row bd-highlight mb-3">
+			</div>			
+			<div class="d-flex justify-content-end  bd-highlight">
+			</div> -->
+		</div>
 	    <hr>
 		<table class="table">
 			<thead class="table-dark text-center">
 				<tr>
 					<th scope="col">Id</th>
 					<th scope="col">Name</th>
-					<th scope="col">Edit</th>
-					<th scope="col">Activate/Deactivate</th>
-					<th scope="col">Delete</th>
 					<th scope="col">is this active ?</th>
+					<th scope="col">Activate/Deactivate</th>
+					<th scope="col">Edit</th>
+					<th scope="col">Delete</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tbody th:each="author: ${list_authors}" class="text-center table-info">
+				<tbody th:each="author: ${list_authors}" class="text-center table-success">
 					<tr class="table-active">
 						<td scope="row"><strong th:text="${author.id}"></strong></td>
 						<td scope="row"><strong th:text="${author.name}"></strong></td>
-						<td scope="row"><a class="btn btn-dark" th:href="@{/authors/edit/__${author.id}__}" role="button"><i class="fas fa-edit"></i></a></td>
-						<td scope="row">
-							<a class="btn btn-dark" th:href="@{/author_state}" role="button"	>
-								<abbr title="Deactivate this author"><i th:if="${author.register}" class="fas fa-eye-slash"></i></abbr>
-								<abbr title=	"Activate this author"><i th:unless="${author.register}" class="fas fa-eye"></i></abbr>
-							</a>
-						</td>
-						<td scope="row"><a class="btn btn-dark" th:href="@{/author_delete}" role="button"><i class="fas fa-trash"></i></a></td>
 						<td scope="row">
 							<i th:if="${author.register}" class="fa fa-check text-success"></i>
 							<i th:unless="${author.register}" class="fa fa-circle text-danger"></i>
 						</td>
+						<td scope="row">
+							<a class="btn btn-dark" th:href="@{/authors/state/__${author.id}__}" role="button" th:if="${author.register}">
+								<abbr title="Deactivate this author"><i  class="fas fa-eye-slash"></i></abbr>
+							</a>
+							<a class="btn btn-dark" th:href="@{/authors/state/__${author.id}__}" role="button" th:unless="${author.register}">
+								<abbr title="Activate this author"><i class="fas fa-eye"></i></abbr>
+							</a>
+						</td>
+						<td scope="row"><a class="btn btn-dark" th:href="@{/authors/edit/__${author.id}__}" role="button"><i class="fas fa-edit"></i></a></td>
+						<td scope="row"><a class="btn btn-dark" th:href="@{/authors/delete/__${author.id}__}" role="button"><i class="fas fa-trash"></i></a></td>
 						<p class="text-danger" th:if="${error != null}" th:text="${error}"></p>
 					</tr>
 				</tbody>
@@ -51,9 +70,6 @@
 
 		<hr>
 
-        <a class="btn btn-secondary" th:href="@{/}" role="button">Home</a>
-        <a class="btn btn-secondary" th:href="@{/books}" role="button">Books</a>
-        <a class="btn btn-secondary" th:href="@{/editorials}" role="button">Editorials</a>
 	</div>
 	
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

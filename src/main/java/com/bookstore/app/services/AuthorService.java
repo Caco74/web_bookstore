@@ -51,13 +51,30 @@ public class AuthorService implements UserDetailsService{
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
-	public void discharge(String id, String name) throws ServiceError {
+	public void delete(String id) throws ServiceError {
 		//validate(name);
 		
 		Optional <Author> response = authorRepository.findById(id);
 		if (response.isPresent()) {
 			Author author = response.get();
-			author.setRegister(Boolean.FALSE);
+			authorRepository.delete(author);
+		} else {
+			throw new ServiceError("The requested author was not found.");
+		}
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
+	public void state(String id) throws ServiceError {
+		//validate(name);
+		
+		Optional <Author> response = authorRepository.findById(id);
+		if (response.isPresent()) {
+			Author author = response.get();
+			if (author.getRegister()) {
+				author.setRegister(Boolean.FALSE);				
+			} else {
+				author.setRegister(Boolean.TRUE);				
+			}
 		} else {
 			throw new ServiceError("The requested author was not found.");
 		}

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bookstore.app.entities.Author;
 import com.bookstore.app.errors.ServiceError;
@@ -65,6 +66,27 @@ public class AuthorController {
 		return "redirect:/authors/list";
 	}
 	
+	@GetMapping("/delete/{id}")
+	public String delete(ModelMap model, @PathVariable String id) throws ServiceError  {
+		try {
+			authorService.delete(id);
+			return "redirect:/authors/list";
+		} catch (ServiceError e) {
+			System.out.println(e.getMessage());
+			return "redirect:/";
+		}
+	}
+	
+	@GetMapping("/state/{id}")
+	public String state(@PathVariable String id) throws ServiceError {
+		try {
+			authorService.state(id);
+			return "redirect:/authors/list";
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return "redirect:/";
+		}
+	}
 	
 
 }
