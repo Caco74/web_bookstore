@@ -1,5 +1,6 @@
 package com.bookstore.app.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,54 @@ public class EditorialService {
 		} else {
 			throw new ServiceError("The requested editorial was not found.");
 		}
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
+	public void delete(String id) throws ServiceError {
+		Optional<Editorial> response = editorialRepository.findById(id);
+		if (response.isPresent()) {
+			Editorial editorial = response.get();
+			editorialRepository.delete(editorial);
+		} else {
+			throw new ServiceError("The requested editorial was not found");
+		}
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
+	public void state(String id) throws ServiceError {
+		Optional <Editorial> response = editorialRepository.findById(id);
+		if (response.isPresent()) {
+			Editorial editorial = response.get();
+			if (editorial.getRegister()) {
+				editorial.setRegister(Boolean.FALSE);
+			} else {
+				editorial.setRegister(Boolean.TRUE);
+			}
+		} else {
+			throw new ServiceError("The requested editorial was not found.");
+		}
+	}
+		
+	public Editorial listEditorial(String id) throws ServiceError {
+		Optional<Editorial> response = editorialRepository.findById(id);
+		if (response.isPresent()) {
+			Editorial editorial = response.get();
+			return editorial;
+		} else {
+			throw new ServiceError("No editorial foun.");
+		}
+	}
+	
+	@Transactional(readOnly = true)
+	public List<Editorial> listAssets(String id) throws ServiceError {
+		List<Editorial> editorialList = editorialRepository.searchAssets();
+		
+		return editorialRepository.searchAssets();
+	}
+	
+	@Transactional(readOnly = true)
+	public List<Editorial> listAll() throws ServiceError {
+		return editorialRepository.findAll();
 	}
 
 	private void validate(String name) throws ServiceError {

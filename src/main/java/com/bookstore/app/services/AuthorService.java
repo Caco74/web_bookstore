@@ -51,9 +51,7 @@ public class AuthorService implements UserDetailsService{
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
-	public void delete(String id) throws ServiceError {
-		//validate(name);
-		
+	public void delete(String id) throws ServiceError {		
 		Optional <Author> response = authorRepository.findById(id);
 		if (response.isPresent()) {
 			Author author = response.get();
@@ -64,9 +62,7 @@ public class AuthorService implements UserDetailsService{
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
-	public void state(String id) throws ServiceError {
-		//validate(name);
-		
+	public void state(String id) throws ServiceError {		
 		Optional <Author> response = authorRepository.findById(id);
 		if (response.isPresent()) {
 			Author author = response.get();

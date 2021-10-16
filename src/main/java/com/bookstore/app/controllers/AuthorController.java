@@ -24,11 +24,9 @@ public class AuthorController {
 	public AuthorService authorService;
 	
 	@GetMapping("/list")
-	public String listAuthors(ModelMap model) {
+	public String listAuthors(ModelMap model) throws ServiceError {
 		List<Author> authors = authorService.listAll();
-		/*List<Author> authors = authorService.listAssets();*/
 		model.addAttribute("list_authors", authors);
-		//model.put("active", authorService.)
 		return "authors";
 	}
 	
