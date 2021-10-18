@@ -13,9 +13,7 @@ import com.bookstore.app.entities.Author;
 import com.bookstore.app.entities.Book;
 import com.bookstore.app.entities.Editorial;
 import com.bookstore.app.errors.ServiceError;
-import com.bookstore.app.repositories.AuthorRepository;
 import com.bookstore.app.repositories.BookRepository;
-import com.bookstore.app.repositories.EditorialRepository;
 
 @Service
 public class BookService {
