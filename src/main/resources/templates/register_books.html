@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Books</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-md-center">
+            <div class="col-3"></div>
+            <div class="col-6">
+                
+                <form th:action="@{/books/register}" method="POST">
+                    <div class="alert alert-danger" role="alert" th:if="${error != null}">
+                        <p class="text-danger" th:if="${error != null}" th:text="${error}"></p>
+                    </div>	
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="isbn" name="isbn" placeholder="isbn" autofocus="autofocus">
+                        <small id="isbn" class="form-text text-muted">Enter the book's isbn.</small>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="title" name="title" placeholder="Book title">
+                        <small id="title" class="form-text text-muted">Enter the book's title.</small>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="year" name="year" placeholder="Book year">
+                        <small id="year" class="form-text text-muted">Enter the book's year.</small>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="copies" name="copies" placeholder="Book copies">
+                        <small id="copies" class="form-text text-muted">Enter the book's copies.</small>
+                    </div>
+                    <div class="form-group" >
+                        <select class="form-select" aria-label="Default select example" name="nameAuthor">
+                            <option selected>Select Author</option>
+                            <option th:each="authors : ${authors_list}" th:text="${authors.name}"></option>
+                         </select>
+<!--                         <input type="text" class="form-control" id="author" name="author" placeholder="Book author"> -->	
+                         <small id="author" class="form-text text-muted">Enter the book's author.</small>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-select" aria-label="Default select example" name="nameEditorial">
+                            <option selected>Select Editorial</option>
+                            <option th:each="editorials : ${editorial_list}" th:text="${editorials.name}"></option>
+                         </select>
+<!--                         <input type="text" class="form-control" id="author" name="author" placeholder="Book author"> -->                        
+                        <small id="editorial" class="form-text text-muted">Enter the book's editorial</small>
+                    </div>
+                    <!-- <div class="form-group">
+                        <input type="text" class="form-control" id="borrowedCopies" name="borrowedCopies" placeholder="Book borrowedCopies">
+                        <small id="borrowedCopies" class="form-text text-muted">Enter the book's borrowed copies</small>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="remainingCopies" name="remainingCopies" placeholder="Book remainingCopies">
+                        <small id="remainingCopies" class="form-text text-muted">Enter the book's remaining copies</small>
+                    </div> -->
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <hr>
+                <a class="btn btn-secondary" th:href="@{/books/list}" role="button">Back</a>                
+            </div>
+            <div class="col-3"></div>
+        </div>
+    </div>
+        
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js" integrity="sha512-Tn2m0TIpgVyTzzvmxLNuqbSJH3JP8jm+Cy3hvHrW7ndTDcJ1w5mBiksqDBb8GpE2ksktFvDB/ykZ0mDpsZj20w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+</html>

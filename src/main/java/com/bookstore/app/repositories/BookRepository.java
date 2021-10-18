@@ -13,6 +13,9 @@ import com.bookstore.app.entities.Book;
 @Repository
 public interface BookRepository extends JpaRepository<Book, String>{
 	
+	@Query("SELECT b FROM Book b WHERE b.register = true")
+	public List<Book> searchAssets();
+	
 	@Query("SELECT b FROM Book b WHERE b.title = :title")
 	public List<Book> findByTitle(@Param("title") String title);
 	

@@ -94,9 +94,14 @@ public class EditorialService {
 	
 	@Transactional(readOnly = true)
 	public List<Editorial> listAssets(String id) throws ServiceError {
-		List<Editorial> editorialList = editorialRepository.searchAssets();
+//		List<Editorial> editorialList = editorialRepository.searchAssets();
 		
 		return editorialRepository.searchAssets();
+	}
+	
+	@Transactional(readOnly = true)
+	public Editorial findByName(String name) throws ServiceError {
+		return editorialRepository.findByName(name);
 	}
 	
 	@Transactional(readOnly = true)

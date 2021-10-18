@@ -17,5 +17,8 @@ public interface AuthorRepository extends JpaRepository<Author, String>{
 	
 	@Query("SELECT COUNT(a) > 0 FROM Author a WHERE a.name = :name")
 	public Boolean existByName(@Param("name") String name);
+	
+	@Query("SELECT a FROM Author a WHERE a.name = :name")
+	public Author findByName(@Param("name") String name);
 
 }

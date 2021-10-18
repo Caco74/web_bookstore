@@ -89,6 +89,11 @@ public class AuthorService implements UserDetailsService{
 	}
 	
 	@Transactional(readOnly = true)
+	public Author finByName(String name) {
+		return authorRepository.findByName(name);		
+	}
+	
+	@Transactional(readOnly = true)
 	public List<Author> listAssets() {
 		return authorRepository.searchAssets();
 	}
