@@ -59,19 +59,6 @@ public class BookService {
 		}
 	}
 	
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
-	public void discharge(String id, String title) throws ServiceError {
-		Optional <Book> response = bookRepository.findById(id);
-		if (response.isPresent()) {
-			Book book = response.get();
-			book.setRegister(Boolean.FALSE);
-			
-			bookRepository.save(book);
-		} else {
-			throw new ServiceError("The requested book was not found.");
-		}		
-	}
-	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
 	public void delete(String id) throws ServiceError {
 		Optional<Book> response = bookRepository.findById(id);

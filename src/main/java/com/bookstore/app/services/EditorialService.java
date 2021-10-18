@@ -42,19 +42,6 @@ public class EditorialService {
 			throw new ServiceError("The requested editorial was not found.");
 		}
 	}
-
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
-	public void discharge(String id, String name) throws ServiceError {
-		validate(name);
-
-		Optional<Editorial> response = editorialRepository.findById(id);
-		if (response.isPresent()) {
-			Editorial editorial = response.get();
-			editorial.setRegister(Boolean.FALSE);
-		} else {
-			throw new ServiceError("The requested editorial was not found.");
-		}
-	}
 	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
 	public void delete(String id) throws ServiceError {

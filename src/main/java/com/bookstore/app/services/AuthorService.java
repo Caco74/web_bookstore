@@ -31,9 +31,7 @@ public class AuthorService implements UserDetailsService{
 		author.setRegister(Boolean.TRUE);
 		
 		authorRepository.save(author);		
-	}
-	
-	 
+	}	 
 	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
 	public void change(String id, String name) throws ServiceError {
