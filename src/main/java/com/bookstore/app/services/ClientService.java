@@ -92,6 +92,11 @@ public class ClientService {
 		}
 	}
 	
+	@Transactional(readOnly = true)
+	public Client findByName(String name) throws ServiceError {
+		return clientRepository.findByName(name);
+	}
+	
 	private void validate(String name, String lastName) throws ServiceError {
 		if (name == null || name.isEmpty()) {
 			throw new ServiceError("The client's name cannot be null.");

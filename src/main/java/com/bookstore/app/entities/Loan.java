@@ -19,10 +19,10 @@ public class Loan {
 	@GenericGenerator(name = "uuid", strategy = "uuid2")
 	private String id;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date loanDate;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date returnDate;
 	
 	private Boolean register;	
@@ -75,6 +75,10 @@ public class Loan {
 
 	public Client getClient() {
 		return client;
+	}
+	
+	public String getClientName() {
+		return client.getName();
 	}
 
 	public void setClient(Client client) {

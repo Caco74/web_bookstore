@@ -91,6 +91,11 @@ public class BookService {
 	}
 	
 	@Transactional(readOnly = true)
+	public Book findByTitle(String title) throws ServiceError {
+		return bookRepository.findByTitle(title);
+	}
+	
+	@Transactional(readOnly = true)
 	public Book listBook(String id) throws ServiceError {
 		Optional<Book> response = bookRepository.findById(id);
 		if (response.isPresent()) {
