@@ -31,14 +31,14 @@
                     <br>
                     <div class="form-group" >
                         <select class="form-select" aria-label="Default select example" name="titleBook">
-                            <option th:each="book : ${books_list}" th:value="${book}" th:text="${book.title}" th:selected="${book.title == loan_data.book.title }" ></option>
+                            <option th:each="book : ${books_list}" th:value="${book.title}" th:text="${book.title}" th:selected="${book.title == loan_data.book.title }" ></option>
                          </select>
                          <small id="book" class="form-text text-muted">Select the book.</small>
                     </div>
                     <br>
                     <div class="form-group" >
                         <select class="form-select" aria-label="Default select example" name="nameClient">
-                            <option th:each="client : ${clients_list}" th:value="${client}" th:text="${client.name}"
+                            <option th:each="client : ${clients_list}" th:value="${client.name}" th:text="${client.name + ' ' + client.lastName}"
                               th:selected="${client.name  == loan_data.client.name }" ></option>
                          </select>
                          <small id="client" class="form-text text-muted">Select the client.</small>

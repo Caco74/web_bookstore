@@ -20,18 +20,12 @@
                         <p class="text-danger" th:if="${error != null}" th:text="${error}"></p>
                     </div>	
                     <div class="form-group">
-                        <!-- <input type="text" id="start" class="form-control" name="loanDate" th:value="${#temporals.format(localDate, 'dd-MM-yyyy')}" readonly> -->
-                        <!-- <input type="text" id="start" class="form-control" name="loanDate" th:value="${#temporals.format(Date, 'dd-MM-yyyy')}" readonly> -->
-                        <input type="date" name="loanDate" class="form-control">
-
-                        <!-- <input type="text" class="form-control" id="identification" name="loanDate" placeholder="Loan Date" autofocus="autofocus"> -->
+                        <input type="date" class="form-control" name="loanDate" th:value="${#temporals.format(localDate, 'yyyy-MM-dd')}" th:min="${#temporals.format(localDate, 'yyyy-MM-dd')}">
                         <small id="loanDate" class="form-text text-muted">Loan's date.</small>
                     </div>
                     <br>
                     <div class="form-group">
-                        <input type="date" id="start" class="form-control" name="returnDate" th:value="${#temporals.format(tomorrow, 'yyyy-MM-dd')}" th:min="${#temporals.format(tomorrow, 'yyyy-MM-dd')}">
-
-                        <!-- <input type="date" class="form-control" id="returnDate" name="returnDate" placeholder="Return Date"> -->
+                        <input type="date"  class="form-control" name="returnDate" th:value="${#temporals.format(tomorrow, 'yyyy-MM-dd')}" th:min="${#temporals.format(tomorrow, 'yyyy-MM-dd')}">
                         <small id="returnDate" class="form-text text-muted">Enter the loan's date return.</small>
                     </div>
                     <br>
@@ -46,8 +40,7 @@
                     <div class="form-group" >
                         <select class="form-select" aria-label="Default select example" name="nameClient">
                             <option selected>Select Client</option>
-                            <!-- <option th:each="client : ${clients_list}" th:text="${client.name + ' ' + client.lastName}"></option> -->
-                            <option th:each="client : ${clients_list}" th:text="${client.name}"></option>
+                            <option th:each="client : ${clients_list}" th:value="${client.name}" th:text="${client.name + ' ' + client.lastName}"></option>
                          </select>
                          <small id="client" class="form-text text-muted">Select the client.</small>
                     </div>

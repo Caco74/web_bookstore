@@ -62,6 +62,7 @@ public class LoanController {
 		try {
 			Client clienta = clientService.findByName(nameClient);
 			Book book = bookService.findByTitle(titleBook);
+			System.out.println(book.getTitle());
 			loanService.register(loanDate, returnDate, book, clienta);
 			
 			return "redirect:/loans/list";
@@ -81,6 +82,37 @@ public class LoanController {
 		return "edit_loans";
 	}
 	
+	@PostMapping("/edit/{id}")
+	public String edit(@PathVariable("id") String id, @RequestParam("loanDate") Date loanDate, @RequestParam("returnDate") Date returnDate , @RequestParam String titleBook, @RequestParam String nameClient) throws ServiceError {
+		try {
+			Client client = clientService.findByName(nameClient);
+			Book book = bookService.findByTitle(titleBook);
+			loanService.change(id, loanDate, returnDate, book, client);
+			
+			return "redirect:/loans/list";			
+		} catch (ServiceError e) {
+			return "redirect:/loans/list";
+		}
+	}
 	
+	@GetMapping("/delete/{id}")
+	public String delete(@PathVariable("id") String id) throws ServiceError {
+		try {
+			loanService.delete(id);			
+			return "redirect:/loans/list";
+		} catch (ServiceError e) {
+			return "redirect:/loans/list";
+		}
+	}
+	
+	@GetMapping("/state/{id}")
+	public String state(@PathVariable("id") String id) throws ServiceError {
+		try {
+			loanService.state(id);
+			return "redirect:/loans/list";
+		} catch (ServiceError e) {
+			return "redirect:/loans/list";
+		}
+	}
 
 }

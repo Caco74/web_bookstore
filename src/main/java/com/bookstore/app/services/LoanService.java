@@ -35,6 +35,50 @@ public class LoanService {
 		loanRepository.save(loan);
 	}
 	
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
+	public void delete(String id) throws ServiceError {
+		Optional<Loan> response = loanRepository.findById(id);
+		if (response.isPresent()) {
+			Loan loan = response.get();
+			loanRepository.delete(loan);
+		} else {
+			throw new ServiceError("The request loan was not found.");
+		}
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
+	public void change(String id, Date loanDate, Date returnDate, Book book, Client client) throws ServiceError {
+		validate(book);
+		Optional<Loan> response = loanRepository.findById(id);
+		if (response.isPresent()) {
+			Loan loan = response.get();
+			loan.setLoanDate(loanDate);
+			loan.setReturnDate(returnDate);
+			loan.setBook(book);
+			loan.setClient(client);
+			
+			loanRepository.save(loan);
+		} else {
+			throw new ServiceError("The request loan was not found.");
+		}
+		
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
+	public void state(String id) throws ServiceError {
+		Optional<Loan> response = loanRepository.findById(id);
+		if (response.isPresent()) {
+			Loan loan = response.get();
+			if (loan.getRegister()) {
+				loan.setRegister(Boolean.FALSE);
+			} else {
+				loan.setRegister(Boolean.TRUE);
+			}
+		} else {
+			throw new ServiceError("The request loan was not found.");
+		}
+	}
+	
 	@Transactional(readOnly = true)
 	public List<Loan> listAll() throws ServiceError {
 		return loanRepository.findAll();
@@ -52,7 +96,7 @@ public class LoanService {
 		}
 	}
 	
-	public void validate() throws ServiceError {
+	public void validate(Book book) throws ServiceError {
 //		if (client.getLastName()) {
 //			throw new ServiceError("The client is null");
 //		}
@@ -60,6 +104,10 @@ public class LoanService {
 //		if (book.equals(null)) {
 //			throw new ServiceError("The book is null");
 //		}
+		if (book.getTitle() == null) {
+			throw new ServiceError("EROROROROROROROROR");
+			
+		}
 	}
 
 }
