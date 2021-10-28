@@ -23,7 +23,7 @@ public class ClientController {
 	ClientService clientService;
 	
 	@GetMapping("/list")
-	public String listClients(ModelMap model) throws ServiceError {
+	public String listClients(ModelMap model) {
 		try {
 			List<Client> clients = clientService.listAll();
 			model.addAttribute("list_clients", clients);
@@ -35,12 +35,12 @@ public class ClientController {
 	}
 	
 	@GetMapping("/register")
-	public String register() throws ServiceError {
+	public String register() {
 		return "register_clients";
 	}
 	
 	@PostMapping("/register")
-	public String register(@RequestParam Long identification, @RequestParam String name, @RequestParam("last_name") String lastName, @RequestParam String phone) throws ServiceError {
+	public String register(@RequestParam Long identification, @RequestParam String name, @RequestParam("last_name") String lastName, @RequestParam String phone) {
 		try {
 			clientService.register(identification, name, lastName, phone);
 			return "redirect:/clients/list";
@@ -50,17 +50,21 @@ public class ClientController {
 	}
 	
 	@GetMapping("/edit/{id}")
-	public String edit(ModelMap model, @PathVariable("id") String id) throws ServiceError {
-		Client client = clientService.listClient(id);
-		
-		model.addAttribute("client", client);
-		return "edit_clients";		
+	public String edit(ModelMap model, @PathVariable("id") String id) {
+		try {
+			Client client = clientService.listClient(id);
+			
+			model.addAttribute("client", client);
+			return "edit_clients";
+		} catch (Exception e) {
+			return "/clients/list";
+		}
 	}
 	
 	@PostMapping("/edit/{id}")
 	public String edit(@PathVariable("id") String id, @RequestParam Long identification, @RequestParam String name, @RequestParam("last_name") String lastName, @RequestParam String phone) throws ServiceError {
 		try {
-			clientService.change(id, name, lastName, phone);
+			clientService.change(id, identification, name, lastName, phone);
 			return "redirect:/clients/list";
 		} catch (ServiceError e) {
 			return "redirect:/clients/list";

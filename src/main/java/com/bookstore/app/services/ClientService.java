@@ -19,11 +19,11 @@ public class ClientService {
 	private ClientRepository clientRepository;
 	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
-	public void register(Long identidication, String name, String lastName, String phone) throws ServiceError {
-		validate(name, lastName);
+	public void register(Long identification, String name, String lastName, String phone) throws ServiceError {
+		validate(identification, name, lastName);
 		
 		Client client = new Client();
-		client.setIdentification(identidication);
+		client.setIdentification(identification);
 		client.setName(name);
 		client.setLastName(lastName);
 		client.setPhone(phone);
@@ -33,12 +33,13 @@ public class ClientService {
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
-	public void change(String id, String name, String lastName, String phone) throws ServiceError {
-		validate(name, lastName);
+	public void change( String id, Long identification, String name, String lastName, String phone) throws ServiceError {
+		validate(identification,name, lastName);
 		
 		Optional <Client> response = clientRepository.findById(id);
 		if (response.isPresent()) {
 			Client client = response.get();
+			client.setIdentification(identification);
 			client.setName(name);
 			client.setLastName(lastName);
 			client.setPhone(phone);
@@ -97,9 +98,12 @@ public class ClientService {
 		return clientRepository.findByName(name);
 	}
 	
-	private void validate(String name, String lastName) throws ServiceError {
+	private void validate(Long identification, String name, String lastName) throws ServiceError {
 		if (name == null || name.isEmpty()) {
 			throw new ServiceError("The client's name cannot be null.");
+		}
+		if (identification== null) {
+			throw new ServiceError("NOOO.");
 		}
 		if (lastName == null || lastName.isEmpty()) {
 			throw new ServiceError("The client's last name cannot be null.");

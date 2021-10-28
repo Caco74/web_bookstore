@@ -48,7 +48,7 @@ public class LoanService {
 	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
 	public void change(String id, Date loanDate, Date returnDate, Book book, Client client) throws ServiceError {
-		validate(book);
+		//validate(book);
 		Optional<Loan> response = loanRepository.findById(id);
 		if (response.isPresent()) {
 			Loan loan = response.get();
@@ -96,7 +96,7 @@ public class LoanService {
 		}
 	}
 	
-	public void validate(Book book) throws ServiceError {
+	public void validate(Book book, Client client) throws ServiceError {
 //		if (client.getLastName()) {
 //			throw new ServiceError("The client is null");
 //		}
@@ -104,6 +104,11 @@ public class LoanService {
 //		if (book.equals(null)) {
 //			throw new ServiceError("The book is null");
 //		}
+//		if (book.getClass().isP) {
+//			throw new ServiceError("EROROROROROROROROR");
+//			
+//		}
+		
 		if (book.getTitle() == null) {
 			throw new ServiceError("EROROROROROROROROR");
 			

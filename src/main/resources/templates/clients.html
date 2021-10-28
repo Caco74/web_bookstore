@@ -12,8 +12,9 @@
 </head>
 <body>
 	<h1 class="text-center display-3">Clients List</h1>
+	<p class="text-danger" th:if="${error != null}" th:text="${error}"></p>
 	<div class="container">
-		<div class="row">
+		<div class="row">	
 			<div class="col">
 				<a class="btn btn-success" th:href="@{/clients/register}" role="button">Register</a>
 			</div>
@@ -60,7 +61,6 @@
 						</td>
 						<td scope="row"><a class="btn btn-dark" th:href="@{/clients/edit/__${client.id}__}" role="button"><i class="fas fa-edit"></i></a></td>
 						<td scope="row"><a class="btn btn-dark" th:href="@{/clients/delete/__${client.id}__}" role="button"><i class="fas fa-trash"></i></a></td>
-						<p class="text-danger" th:if="${error != null}" th:text="${error}"></p>
 					</tr>
 				</tbody>
 			</tbody>

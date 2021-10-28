@@ -17,6 +17,9 @@
             <div class="col-6">                
                 <form th:action="@{/clients/edit/__${client.id}__}" method="POST">                    
                     <div class="row">
+                    <div class="alert alert-danger" role="alert" th:if="${error != null}">
+                        <p class="text-danger" th:if="${error != null}" th:text="${error}"></p>
+                    </div>	
                         <div class="form-group">
                             <input type="text" th:value="${client.identification}" class="form-control" id="identification" name="identification" autofocus="autofocus">
                             <small id="identification" class="form-text text-muted">Enter the client's identification.</small>

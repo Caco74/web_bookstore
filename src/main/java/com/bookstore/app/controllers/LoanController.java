@@ -17,7 +17,6 @@ import com.bookstore.app.entities.Book;
 import com.bookstore.app.entities.Client;
 import com.bookstore.app.entities.Loan;
 import com.bookstore.app.errors.ServiceError;
-import com.bookstore.app.services.AuthorService;
 import com.bookstore.app.services.BookService;
 import com.bookstore.app.services.ClientService;
 import com.bookstore.app.services.LoanService;
@@ -83,7 +82,7 @@ public class LoanController {
 	}
 	
 	@PostMapping("/edit/{id}")
-	public String edit(@PathVariable("id") String id, @RequestParam("loanDate") Date loanDate, @RequestParam("returnDate") Date returnDate , @RequestParam String titleBook, @RequestParam String nameClient) throws ServiceError {
+	public String edit(@PathVariable("id") String id, @RequestParam("loanDate") Date loanDate, @RequestParam("returnDate") Date returnDate , @RequestParam String titleBook, @RequestParam String nameClient) {
 		try {
 			Client client = clientService.findByName(nameClient);
 			Book book = bookService.findByTitle(titleBook);

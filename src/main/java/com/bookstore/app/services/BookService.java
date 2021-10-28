@@ -24,7 +24,7 @@ public class BookService {
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
 	public void register(Long isbn, String title, Integer year, Integer copies, @DefaultValue("0") Integer borrowedCopies, @DefaultValue("0") Integer remainingCopies, Author author, Editorial editorial) throws ServiceError {
 		
-		validate(title, copies);
+//		validate(title, copies);
 		
 		Book book = new Book();
 		book.setIsbn(isbn);
@@ -45,7 +45,7 @@ public class BookService {
 	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
 	public void change(String id, String title, Integer copies) throws ServiceError {
-		validate(title, copies);
+//		validate(title, copies);
 		
 		Optional <Book> response = bookRepository.findById(id);
 		if (response.isPresent()) {
@@ -91,8 +91,9 @@ public class BookService {
 	}
 	
 	@Transactional(readOnly = true)
-	public Book findByTitle(String title) throws ServiceError {
-		return bookRepository.findByTitle(title);
+	public Book findByTitle(String titleBook) throws ServiceError {
+		validate(titleBook);
+		return bookRepository.findByTitle(titleBook);
 	}
 	
 	@Transactional(readOnly = true)
@@ -106,13 +107,13 @@ public class BookService {
 		}
 	}
 	
-	private void validate(String title, Integer copies ) throws ServiceError {
+	private void validate(String title) throws ServiceError {
 		if (title == null || title.isEmpty()) {
 			throw new ServiceError("The title of the book can not be null.");
 		}
-		if (copies == 0 || copies<0 ) {
-			throw new ServiceError("You must assign a value greater than zero.");
-		}
+//		if (copies == 0 || copies<0 ) {
+//			throw new ServiceError("You must assign a value greater than zero.");
+//		}
 		
 	}
 
