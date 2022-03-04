@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bookstore.app.entities.Client;
 import com.bookstore.app.errors.ServiceError;
@@ -40,9 +41,9 @@ public class ClientController {
 	}
 	
 	@PostMapping("/register")
-	public String register(@RequestParam Long identification, @RequestParam String name, @RequestParam("last_name") String lastName, @RequestParam String phone) {
+	public String register(@RequestParam MultipartFile file, @RequestParam Long identification, @RequestParam String name, @RequestParam("last_name") String lastName, @RequestParam String phone, @RequestParam String mail, @RequestParam String pass) {
 		try {
-			clientService.register(identification, name, lastName, phone);
+			clientService.register(file, identification, name, lastName, phone, mail, pass);
 			return "redirect:/clients/list";
 		} catch (ServiceError e) {
 			return "redirect:/clients/list";
@@ -62,9 +63,9 @@ public class ClientController {
 	}
 	
 	@PostMapping("/edit/{id}")
-	public String edit(@PathVariable("id") String id, @RequestParam Long identification, @RequestParam String name, @RequestParam("last_name") String lastName, @RequestParam String phone) throws ServiceError {
+	public String edit(MultipartFile file, @PathVariable("id") String id, @RequestParam Long identification, @RequestParam String name, @RequestParam("last_name") String lastName, @RequestParam String phone, @RequestParam String mail, @RequestParam String pass) throws ServiceError {
 		try {
-			clientService.change(id, identification, name, lastName, phone);
+			clientService.change(file, id, identification, name, lastName, phone, mail, pass);
 			return "redirect:/clients/list";
 		} catch (ServiceError e) {
 			return "redirect:/clients/list";

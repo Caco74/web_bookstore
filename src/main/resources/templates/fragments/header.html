@@ -1,0 +1,31 @@
+<header th:fragment="header">
+    <div class="menu-bar">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a href="#" class="navbar-brand">
+                <img th:src="@{/image/logo.png}" alt="Logo" width="55" height="50" class="d-inline-block align-top">
+                <span class="hidden">Marca</span></a>
+            <button 
+                type="button"
+                class="navbar-toggler"
+                data-bs-toggle="collapse"
+                data-bs-target="#toggleMobileMenu"
+                aria-controls="toggleMobileMenu"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+    
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="toggleMobileMenu">                    
+                <ul class="navbar-nav ms-auto text-center">
+                    <li class="nav-item"><a class="nav-link">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/authors/list}" role="button">Authors</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/books/list}" role="button">Books</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/clients/list}" role="button">Clients</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/editorials/list}" role="button">Editorials</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/loans/list}" role="button">Loans</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+

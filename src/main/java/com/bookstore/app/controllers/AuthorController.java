@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bookstore.app.entities.Author;
 import com.bookstore.app.errors.ServiceError;
@@ -35,9 +36,9 @@ public class AuthorController {
 	}
 	
 	@PostMapping("/register")
-	public String registration(ModelMap model, @RequestParam  String name) throws ServiceError {
+	public String registration(ModelMap model, @RequestParam MultipartFile file, @RequestParam  String name) throws ServiceError {
 		try {
-			authorService.register(name);			
+			authorService.register(file, name);			
 		} catch (ServiceError e) {
 			model.put("error", e.getMessage());
 			return "register_authors";
@@ -54,9 +55,9 @@ public class AuthorController {
 	}
 	
 	@PostMapping("/edit/{id}")
-	public String edit(ModelMap model, @PathVariable String id, @RequestParam String name) throws ServiceError {
+	public String edit(ModelMap model,@RequestParam MultipartFile file, @PathVariable String id, @RequestParam String name) throws ServiceError {
 		try {
-			authorService.change(id, name);
+			authorService.change(file, id, name);
 		} catch (ServiceError e) {
 			return "redirect:/authors/edit/"+id;
 		}

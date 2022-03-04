@@ -4,7 +4,7 @@
     <title>Clients</title>
 </head>
 <body>
-	<h1 class="text-center display-3">Clients List</h1>
+	<header th:replace="/fragments/header :: header"></header>
 	<p class="text-danger" th:if="${error != null}" th:text="${error}"></p>
 	<div class="container">
 		<div class="row">	

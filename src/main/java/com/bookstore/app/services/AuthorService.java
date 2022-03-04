@@ -10,8 +10,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bookstore.app.entities.Author;
+import com.bookstore.app.entities.Picture;
 import com.bookstore.app.errors.ServiceError;
 import com.bookstore.app.repositories.AuthorRepository;
 
@@ -23,24 +25,38 @@ public class AuthorService implements UserDetailsService{
 	@Autowired
 	private AuthorRepository authorRepository;
 	
+	@Autowired
+	private PictureService pictureService;
+	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
-	public void register(String name) throws ServiceError{
+	public void register(MultipartFile file ,String name) throws ServiceError{
 		validate(name);
 		Author author = new Author();
 		author.setName(name);
 		author.setRegister(Boolean.TRUE);
 		
+		Picture picture = pictureService.save(file);
+		author.setPicture(picture);
+		
 		authorRepository.save(author);		
 	}	 
 	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
-	public void change(String id, String name) throws ServiceError {
+	public void change(MultipartFile file, String id, String name) throws ServiceError {
 		validate(name);
 		
 		Optional <Author> response = authorRepository.findById(id); 
 		if (response.isPresent()) {
 			Author author = response.get();
 			author.setName(name);
+			
+			String idPciture = null;
+			if (author.getPicture() != null) {
+				idPciture = author.getPicture().getId();
+			}
+			
+			Picture picture = pictureService.reload(idPciture, file);
+			author.setPicture(picture);
 			
 			authorRepository.save(author);
 		} else {
@@ -110,7 +126,8 @@ public class AuthorService implements UserDetailsService{
 			throw new ServiceError("The author is already loaded");
 		}
 	}
-
+	
+	//El método recibe el nombre del cliente y lo busca en el repositorio. Luego lo transforma en un usuario de SPRING SECURITY
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		return null;
